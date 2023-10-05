@@ -1,0 +1,120 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration works 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Heading",
+        },
+      ],
+      "depth": 1,
+      "type": "heading",
+    },
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Paragraph",
+        },
+      ],
+      "type": "paragraph",
+    },
+    {
+      "align": [
+        "left",
+        "right",
+      ],
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "1-1",
+                },
+              ],
+              "type": "tableCell",
+            },
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "1-2",
+                },
+              ],
+              "type": "tableCell",
+            },
+          ],
+          "type": "tableRow",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "2-1",
+                },
+              ],
+              "type": "tableCell",
+            },
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "2-2",
+                },
+              ],
+              "type": "tableCell",
+            },
+          ],
+          "type": "tableRow",
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "3-1",
+                },
+              ],
+              "type": "tableCell",
+            },
+            {
+              "children": [
+                {
+                  "type": "text",
+                  "value": "3-2",
+                },
+              ],
+              "type": "tableCell",
+            },
+          ],
+          "type": "tableRow",
+        },
+      ],
+      "type": "table",
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": "Blockquote",
+            },
+          ],
+          "type": "paragraph",
+        },
+      ],
+      "type": "blockquote",
+    },
+  ],
+  "type": "root",
+}
+`;

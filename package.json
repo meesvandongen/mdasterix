@@ -1,0 +1,38 @@
+{
+  "name": "mdast-builder-2",
+  "type": "module",
+  "devDependencies": {
+    "@types/mdast": "^4.0.1",
+    "bun-types": "latest",
+    "prettier": "^3.0.3",
+    "tshy": "^1.2.2",
+    "typescript": "^5.2.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepare": "tshy",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit"
+  },
+  "tshy": {
+    "exports": {
+      "./package.json": "./package.json",
+      ".": "./src/index.ts"
+    }
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    }
+  }
+}
