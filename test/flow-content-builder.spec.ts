@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { flowContentBuilder } from "../src/flow-content-builder.js";
+import { flowContentBuilder } from "../src/index.js";
 
 describe("flow content builder", () => {
   it("definition", () => {

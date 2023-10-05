@@ -1,7 +1,10 @@
 {
   "name": "mdasterix",
-  "type": "module",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meesvandongen/mdasterix.git"
+  },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
     "@types/mdast": "^4.0.1",
@@ -9,33 +12,6 @@
     "prettier": "^3.0.3",
     "tshy": "^1.2.2",
     "typescript": "^5.2.2"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "prepare": "tshy",
-    "build": "tshy",
-    "test": "bun test",
-    "typecheck": "tsc --noEmit",
-    "release": "bun run build && bun run test && changeset publish"
-  },
-  "tshy": {
-    "exports": {
-      "./package.json": "./package.json",
-      ".": "./src/index.ts"
-    }
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/meesvandongen/mdasterix.git"
-  },
-  "bugs": {
-    "url": "https://github.com/meesvandongen/mdasterix/issues"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -49,5 +25,30 @@
         "default": "./dist/commonjs/index.js"
       }
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/meesvandongen/mdasterix/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "prepare": "tshy",
+    "build": "tshy",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "release": "bun run build && bun run test && changeset publish",
+    "changeset": "changeset"
+  },
+  "tshy": {
+    "exports": {
+      "./package.json": "./package.json",
+      ".": "./src/index.ts"
+    }
+  },
+  "type": "module"
 }

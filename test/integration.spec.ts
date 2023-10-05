@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { rootContentBuilder } from "../src/root-content-builder.js";
+import { rootContentBuilder } from "../src/index.js";
 
 describe("integration", () => {
   it("works", () => {

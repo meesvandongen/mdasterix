@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { tableContentBuilder } from "../src/table-content-builder.js";
+import { tableContentBuilder } from "../src/index.js";
 
 describe("table content builder", () => {
   it("tableCell", () => {
