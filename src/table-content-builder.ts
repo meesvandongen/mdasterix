@@ -1,4 +1,4 @@
-import { TableContentMap, TableRow, TableContent } from "mdast";
+import { TableContentMap, TableRow, TableContent, Root } from "mdast";
 import { RowContentBuilder, rowContentBuilder } from "./row-content-builder.js";
 
 export class TableContentBuilder implements Record<keyof TableContentMap, any> {
@@ -8,7 +8,7 @@ export class TableContentBuilder implements Record<keyof TableContentMap, any> {
   ): this {
     const builder = rowContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "tableRow",
@@ -21,8 +21,16 @@ export class TableContentBuilder implements Record<keyof TableContentMap, any> {
 
   private state: Array<TableContent> = [];
 
-  public build(): TableContent[] {
-    return this.state;
+  public build<IsRoot extends boolean = true>(
+    isRoot: IsRoot = true as IsRoot,
+  ): IsRoot extends true ? Root : Array<TableContent> {
+    if (isRoot) {
+      return {
+        type: "root",
+        children: this.state,
+      } as any;
+    }
+    return this.state as any;
   }
 }
 

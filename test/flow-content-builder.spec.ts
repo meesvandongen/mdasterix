@@ -6,7 +6,7 @@ describe("flow content builder", () => {
     expect(
       flowContentBuilder()
         .definition({ identifier: "foo", url: "http://example.com" })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "definition",
@@ -18,7 +18,9 @@ describe("flow content builder", () => {
 
   it("footnoteDefinition", () => {
     expect(
-      flowContentBuilder().footnoteDefinition({ identifier: "foo" }).build(),
+      flowContentBuilder()
+        .footnoteDefinition({ identifier: "foo" })
+        .build(false),
     ).toEqual([
       {
         type: "footnoteDefinition",
@@ -29,7 +31,7 @@ describe("flow content builder", () => {
   });
 
   it("blockquote", () => {
-    expect(flowContentBuilder().blockquote().build()).toEqual([
+    expect(flowContentBuilder().blockquote().build(false)).toEqual([
       {
         type: "blockquote",
         children: [],
@@ -39,7 +41,7 @@ describe("flow content builder", () => {
 
   it("code", () => {
     expect(
-      flowContentBuilder().code({ value: "foo", lang: "js" }).build(),
+      flowContentBuilder().code({ value: "foo", lang: "js" }).build(false),
     ).toEqual([
       {
         type: "code",
@@ -50,7 +52,7 @@ describe("flow content builder", () => {
   });
 
   it("heading", () => {
-    expect(flowContentBuilder().heading({ depth: 1 }).build()).toEqual([
+    expect(flowContentBuilder().heading({ depth: 1 }).build(false)).toEqual([
       {
         type: "heading",
         depth: 1,
@@ -60,18 +62,18 @@ describe("flow content builder", () => {
   });
 
   it("html", () => {
-    expect(flowContentBuilder().html({ value: "<div></div>" }).build()).toEqual(
-      [
-        {
-          type: "html",
-          value: "<div></div>",
-        },
-      ],
-    );
+    expect(
+      flowContentBuilder().html({ value: "<div></div>" }).build(false),
+    ).toEqual([
+      {
+        type: "html",
+        value: "<div></div>",
+      },
+    ]);
   });
 
   it("list", () => {
-    expect(flowContentBuilder().list({ ordered: true }).build()).toEqual([
+    expect(flowContentBuilder().list({ ordered: true }).build(false)).toEqual([
       {
         type: "list",
         ordered: true,
@@ -81,7 +83,7 @@ describe("flow content builder", () => {
   });
 
   it("paragraph", () => {
-    expect(flowContentBuilder().paragraph().build()).toEqual([
+    expect(flowContentBuilder().paragraph().build(false)).toEqual([
       {
         type: "paragraph",
         children: [],
@@ -90,7 +92,7 @@ describe("flow content builder", () => {
   });
 
   it("table", () => {
-    expect(flowContentBuilder().table().build()).toEqual([
+    expect(flowContentBuilder().table().build(false)).toEqual([
       {
         type: "table",
         children: [],
@@ -99,10 +101,22 @@ describe("flow content builder", () => {
   });
 
   it("thematicBreak", () => {
-    expect(flowContentBuilder().thematicBreak().build()).toEqual([
+    expect(flowContentBuilder().thematicBreak().build(false)).toEqual([
       {
         type: "thematicBreak",
       },
     ]);
+  });
+
+  it("uses root", () => {
+    expect(flowContentBuilder().paragraph().build(true)).toEqual({
+      type: "root",
+      children: [
+        {
+          type: "paragraph",
+          children: [],
+        },
+      ],
+    });
   });
 });

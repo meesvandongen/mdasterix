@@ -3,7 +3,7 @@ import { phrasingContentBuilder } from "../src/index.js";
 
 describe("phrasing content builder", () => {
   it("break", () => {
-    expect(phrasingContentBuilder().break().build()).toEqual([
+    expect(phrasingContentBuilder().break().build(false)).toEqual([
       {
         type: "break",
       },
@@ -11,7 +11,7 @@ describe("phrasing content builder", () => {
   });
 
   it("delete", () => {
-    expect(phrasingContentBuilder().delete().build()).toEqual([
+    expect(phrasingContentBuilder().delete().build(false)).toEqual([
       {
         type: "delete",
         children: [],
@@ -20,7 +20,7 @@ describe("phrasing content builder", () => {
   });
 
   it("emphasis", () => {
-    expect(phrasingContentBuilder().emphasis().build()).toEqual([
+    expect(phrasingContentBuilder().emphasis().build(false)).toEqual([
       {
         type: "emphasis",
         children: [],
@@ -34,7 +34,7 @@ describe("phrasing content builder", () => {
         .footnoteReference({
           identifier: "foo",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "footnoteReference",
@@ -49,7 +49,7 @@ describe("phrasing content builder", () => {
         .html({
           value: "<p>foo</p>",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "html",
@@ -65,7 +65,7 @@ describe("phrasing content builder", () => {
           url: "http://example.com",
           alt: "foo",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "image",
@@ -82,7 +82,7 @@ describe("phrasing content builder", () => {
           identifier: "foo",
           referenceType: "collapsed",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "imageReference",
@@ -98,7 +98,7 @@ describe("phrasing content builder", () => {
         .inlineCode({
           value: "foo",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "inlineCode",
@@ -113,7 +113,7 @@ describe("phrasing content builder", () => {
         .link({
           url: "http://example.com",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "link",
@@ -130,7 +130,7 @@ describe("phrasing content builder", () => {
           identifier: "foo",
           referenceType: "shortcut",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "linkReference",
@@ -142,7 +142,7 @@ describe("phrasing content builder", () => {
   });
 
   it("strong", () => {
-    expect(phrasingContentBuilder().strong().build()).toEqual([
+    expect(phrasingContentBuilder().strong().build(false)).toEqual([
       {
         type: "strong",
         children: [],
@@ -156,12 +156,23 @@ describe("phrasing content builder", () => {
         .text({
           value: "foo",
         })
-        .build(),
+        .build(false),
     ).toEqual([
       {
         type: "text",
         value: "foo",
       },
     ]);
+  });
+
+  it("uses root", () => {
+    expect(phrasingContentBuilder().break().build(true)).toEqual({
+      type: "root",
+      children: [
+        {
+          type: "break",
+        },
+      ],
+    });
   });
 });

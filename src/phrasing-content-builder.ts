@@ -13,6 +13,7 @@ import {
   Strong,
   Text,
   PhrasingContent,
+  Root,
 } from "mdast";
 
 export class PhrasingContentBuilder
@@ -32,7 +33,7 @@ export class PhrasingContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "delete",
@@ -48,7 +49,7 @@ export class PhrasingContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "emphasis",
@@ -108,7 +109,7 @@ export class PhrasingContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "link",
@@ -125,7 +126,7 @@ export class PhrasingContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "linkReference",
@@ -141,7 +142,7 @@ export class PhrasingContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "strong",
@@ -162,8 +163,16 @@ export class PhrasingContentBuilder
 
   private state: Array<PhrasingContent> = [];
 
-  public build(): PhrasingContent[] {
-    return this.state;
+  public build<IsRoot extends boolean = true>(
+    isRoot: IsRoot = true as IsRoot,
+  ): IsRoot extends true ? Root : Array<PhrasingContent> {
+    if (isRoot) {
+      return {
+        type: "root",
+        children: this.state,
+      } as any;
+    }
+    return this.state as any;
   }
 }
 

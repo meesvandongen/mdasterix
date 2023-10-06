@@ -1,4 +1,4 @@
-import { ListContentMap, ListItem, ListContent } from "mdast";
+import { ListContentMap, ListItem, ListContent, Root } from "mdast";
 import {
   FlowContentBuilder,
   flowContentBuilder,
@@ -11,7 +11,7 @@ export class ListContentBuilder implements Record<keyof ListContentMap, any> {
   ): this {
     const builder = flowContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "listItem",
@@ -24,8 +24,16 @@ export class ListContentBuilder implements Record<keyof ListContentMap, any> {
 
   private state: Array<ListContent> = [];
 
-  public build(): ListContent[] {
-    return this.state;
+  public build<IsRoot extends boolean = true>(
+    isRoot: IsRoot = true as IsRoot,
+  ): IsRoot extends true ? Root : Array<ListContent> {
+    if (isRoot) {
+      return {
+        type: "root",
+        children: this.state,
+      } as any;
+    }
+    return this.state as any;
   }
 }
 

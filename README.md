@@ -11,7 +11,7 @@ npm i mdasterix
 ## Usage
 
 ```js
-const value = rootContentBuilder()
+const value = flowContentBuilder()
   .heading({ depth: 1 }, (phrasingBuilder) => {
     phrasingBuilder.text({ value: "Heading" });
   })

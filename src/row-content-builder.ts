@@ -1,4 +1,4 @@
-import { RowContentMap, TableCell, RowContent } from "mdast";
+import { RowContentMap, TableCell, RowContent, Root } from "mdast";
 import {
   PhrasingContentBuilder,
   phrasingContentBuilder,
@@ -11,7 +11,7 @@ export class RowContentBuilder implements Record<keyof RowContentMap, any> {
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
     this.state.push({
       type: "tableCell",
       children,
@@ -23,8 +23,16 @@ export class RowContentBuilder implements Record<keyof RowContentMap, any> {
 
   private state: Array<RowContent> = [];
 
-  public build(): RowContent[] {
-    return this.state;
+  public build<IsRoot extends boolean = true>(
+    isRoot: IsRoot = true as IsRoot,
+  ): IsRoot extends true ? Root : Array<RowContent> {
+    if (isRoot) {
+      return {
+        type: "root",
+        children: this.state,
+      } as any;
+    }
+    return this.state as any;
   }
 }
 

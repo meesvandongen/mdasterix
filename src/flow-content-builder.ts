@@ -13,13 +13,22 @@ import {
   ThematicBreak,
   BlockContent,
   DefinitionContent,
+  Root,
 } from "mdast";
-import { ListContentBuilder } from "./list-content-builder.js";
+import {
+  ListContentBuilder,
+  listContentBuilder,
+} from "./list-content-builder.js";
 import {
   PhrasingContentBuilder,
   phrasingContentBuilder,
 } from "./phrasing-content-builder.js";
-import { TableContentBuilder } from "./table-content-builder.js";
+import {
+  TableContentBuilder,
+  tableContentBuilder,
+} from "./table-content-builder.js";
+
+export type FlowContent = BlockContent | DefinitionContent;
 
 export class FlowContentBuilder
   implements Record<keyof BlockContentMap & DefinitionContentMap, any>
@@ -38,7 +47,7 @@ export class FlowContentBuilder
   ): this {
     const builder = flowContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "footnoteDefinition",
@@ -55,7 +64,7 @@ export class FlowContentBuilder
   ): this {
     const builder = flowContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
     this.state.push({
       type: "blockquote",
       children,
@@ -78,7 +87,7 @@ export class FlowContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "heading",
@@ -102,9 +111,9 @@ export class FlowContentBuilder
     options: Omit<List, "type" | "children">,
     getChildren?: (builder: ListContentBuilder) => unknown,
   ): this {
-    const builder = new ListContentBuilder();
+    const builder = listContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "list",
@@ -121,7 +130,7 @@ export class FlowContentBuilder
   ): this {
     const builder = phrasingContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "paragraph",
@@ -136,9 +145,9 @@ export class FlowContentBuilder
     options: Omit<Table, "type" | "children"> = {},
     getChildren?: (builder: TableContentBuilder) => unknown,
   ): this {
-    const builder = new TableContentBuilder();
+    const builder = tableContentBuilder();
     getChildren?.(builder);
-    const children = builder.build();
+    const children = builder.build(false);
 
     this.state.push({
       type: "table",
@@ -160,10 +169,18 @@ export class FlowContentBuilder
     return this;
   }
 
-  private state: Array<BlockContent | DefinitionContent> = [];
+  private state: Array<FlowContent> = [];
 
-  public build(): Array<BlockContent | DefinitionContent> {
-    return this.state;
+  public build<IsRoot extends boolean = true>(
+    isRoot: IsRoot = true as IsRoot,
+  ): IsRoot extends true ? Root : Array<FlowContent> {
+    if (isRoot) {
+      return {
+        type: "root",
+        children: this.state,
+      } as any;
+    }
+    return this.state as any;
   }
 }
 

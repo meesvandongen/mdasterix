@@ -1,8 +1,4 @@
 export {
-  rootContentBuilder,
-  type RootContentBuilder,
-} from "./root-content-builder.js";
-export {
   flowContentBuilder,
   type FlowContentBuilder,
 } from "./flow-content-builder.js";

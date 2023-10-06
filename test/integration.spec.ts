@@ -1,9 +1,9 @@
 import { describe, it, expect } from "bun:test";
-import { rootContentBuilder } from "../src/index.js";
+import { flowContentBuilder } from "../src/index.js";
 
 describe("integration", () => {
   it("works", () => {
-    const value = rootContentBuilder()
+    const value = flowContentBuilder()
       .heading({ depth: 1 }, (phrasingBuilder) => {
         phrasingBuilder.text({ value: "Heading" });
       })
