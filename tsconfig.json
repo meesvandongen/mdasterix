@@ -12,6 +12,6 @@
     "strict": true,
     "target": "es2022",
     "module": "NodeNext",
-    "types": ["bun-types"]
+    "types": []
   }
 }

@@ -30,9 +30,10 @@ import {
 
 export type FlowContent = BlockContent | DefinitionContent;
 
-export class FlowContentBuilder
-  implements Record<keyof BlockContentMap & DefinitionContentMap, any>
-{
+export class FlowContentBuilder implements Record<
+  keyof BlockContentMap & DefinitionContentMap,
+  any
+> {
   public definition(options: Omit<Definition, "type">): this {
     this.state.push({
       type: "definition",

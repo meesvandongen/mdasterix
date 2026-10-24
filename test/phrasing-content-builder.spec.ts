@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it } from "vite-plus/test";
 import { phrasingContentBuilder } from "../src/index.js";
 
 describe("phrasing content builder", () => {
