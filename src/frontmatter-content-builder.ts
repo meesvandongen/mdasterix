@@ -1,8 +1,9 @@
 import { FrontmatterContentMap, FrontmatterContent, Yaml, Root } from "mdast";
 
-export class FrontmatterContentBuilder
-  implements Record<keyof FrontmatterContentMap, any>
-{
+export class FrontmatterContentBuilder implements Record<
+  keyof FrontmatterContentMap,
+  any
+> {
   public yaml(options: Omit<Yaml, "type">): this {
     this.state.push({
       type: "yaml",

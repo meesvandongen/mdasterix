@@ -16,9 +16,10 @@ import {
   Root,
 } from "mdast";
 
-export class PhrasingContentBuilder
-  implements Record<keyof PhrasingContentMap, any>
-{
+export class PhrasingContentBuilder implements Record<
+  keyof PhrasingContentMap,
+  any
+> {
   public break(options: Omit<Break, "type"> = {}): this {
     this.state.push({
       type: "break",
